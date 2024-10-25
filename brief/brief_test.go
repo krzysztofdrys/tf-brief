@@ -48,6 +48,10 @@ func TestOnOpenTofuDataset(t *testing.T) {
 		"basic_map_null",
 		"basic_map_update",
 		"basic_multiline_string_update",
+		"basic_set",
+		"basic_set_empty",
+		"basic_set_null",
+		"basic_set_update",
 	}
 
 	for _, testCase := range testCases {
