@@ -2,14 +2,11 @@ OpenTofu will perform the following actions:
 
   # tfcoremock_simple_resource.json will be updated in-place
   ~ resource "tfcoremock_simple_resource" "json" {
-        id     = "5a3fd9b3-e852-8956-8c0a-255d47eda645"
       ~ string = jsonencode(
           ~ {
               ~ list-attribute   = [
-                    "one",
                   - "two",
                   + "four",
-                    "three",
                 ]
               ~ object-attribute = {
                   + key_four  = "value_three"

@@ -36,6 +36,8 @@ func isUnchangedAttributeLine(line string) bool {
 func Plan(lines []string) []string {
 	var result []string
 
+	insideCreateStatement := false
+	lastLineWasCreateStatement := false
 	insideMultiline := false
 	prevLine := ""
 	insideCurlyBraces := false
@@ -45,10 +47,12 @@ func Plan(lines []string) []string {
 	for _, line := range lines {
 		trimmedLine := strings.TrimSpace(line)
 		if trimmedLine == "" {
-			result = append(result, line)
+			if sawFirstLine {
+				result = append(result, line)
+			}
 			continue
 		}
-		if trimmedLine == "Terraform will perform the following actions:" {
+		if strings.HasSuffix(line, "will perform the following actions:") {
 			sawFirstLine = true
 			result = append(result, line)
 			continue
@@ -56,6 +60,31 @@ func Plan(lines []string) []string {
 		if !sawFirstLine {
 			continue
 		}
+		if matched, _ := regexp.MatchString(`^\s\s#\s[\w\.]+\swill\sbe\screated$`, line); matched {
+			insideCreateStatement = true
+			lastLineWasCreateStatement = true
+			result = append(result, line)
+			prevLine = line
+			continue
+		}
+
+		if lastLineWasCreateStatement {
+			result = append(result, line)
+			lastLineWasCreateStatement = false
+			prevLine = line
+			continue
+		}
+
+		if insideCreateStatement {
+			if line == "    }" {
+				insideCreateStatement = false
+				result = append(result, line)
+				continue
+			} else {
+				continue
+			}
+		}
+
 		if strings.HasSuffix(trimmedLine, "<<-EOT") {
 			if insideCurlyBraces {
 				insideCurlyBraces = false
