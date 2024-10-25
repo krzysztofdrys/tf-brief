@@ -1,0 +1,18 @@
+Terraform will perform the following actions:
+
+  # aws_ssm_parameter.example will be updated in-place
+  ~ resource "aws_ssm_parameter" "example" {
+        name  = "example-parameter"
+        type  = "SecureString"
+      ~ value = (sensitive value)
+    }
+
+  # aws_ssm_parameter.example will be updated in-place
+  ~ resource "aws_ssm_parameter" "example_2" {
+        name  = "example-parameter"
+        type  = "SecureString"
+        value = (sensitive value)
+      ~ tags          = {
+           + "Name" = "example-instance"
+        }
+    }

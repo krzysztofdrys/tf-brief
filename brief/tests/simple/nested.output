@@ -1,0 +1,8 @@
+Terraform will perform the following actions:
+
+  # aws_instance.example will be updated in-place
+  ~ resource "aws_instance" "example" {
+      + instance_type = "t2.micro"
+        tags          = {
+        }
+    }

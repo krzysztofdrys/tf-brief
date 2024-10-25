@@ -1,0 +1,13 @@
+Terraform will perform the following actions:
+
+  # module.module_name["key"].resource.this will be updated in-place
+  # (imported from "resource_id")
+  ~ resource "resource" "this" {
+        boolean_attribute           = false
+      ~ updated_boolean_attribute   = false -> true
+        str_attribute               = "master"
+      ~ updated_boolean_attribute_2 = false -> true
+      ~ updated_str_attribute       = "private" -> "internal"
+        int_attribute               = 3488934767
+      ~ updated_int_attribute       = 3488934767
+    }
