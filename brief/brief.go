@@ -47,7 +47,7 @@ func Plan(lines []string) []string {
 	for _, line := range lines {
 		trimmedLine := strings.TrimSpace(line)
 		if trimmedLine == "" {
-			if sawFirstLine {
+			if sawFirstLine && !insideCreateStatement {
 				result = append(result, line)
 			}
 			continue

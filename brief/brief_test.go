@@ -1,6 +1,7 @@
 package brief
 
 import (
+	"fmt"
 	"github.com/google/go-cmp/cmp"
 	"os"
 	"strings"
@@ -38,23 +39,15 @@ func TestSimpleScenarios(t *testing.T) {
 }
 
 func TestOnOpenTofuDataset(t *testing.T) {
-	testCases := []string{
-		"basic_json_string_update",
-		"basic_list",
-		"basic_list_empty",
-		"basic_list_null",
-		"basic_map",
-		"basic_map_empty",
-		"basic_map_null",
-		"basic_map_update",
-		"basic_multiline_string_update",
-		"basic_set",
-		"basic_set_empty",
-		"basic_set_null",
-		"basic_set_update",
+	inputs, err := os.ReadDir("tests/opentofu/inputs")
+	if err != nil {
+		fmt.Println("Error reading directory:", err)
+		return
 	}
 
-	for _, testCase := range testCases {
+	for _, input := range inputs {
+		testCase := input.Name()
+
 		t.Run(testCase, func(t *testing.T) {
 			bbInput, err := os.ReadFile("tests/opentofu/inputs/" + testCase + "/plan")
 			if err != nil {
